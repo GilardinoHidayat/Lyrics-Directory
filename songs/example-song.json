@@ -1,0 +1,22 @@
+{
+    "title": "Example Song",
+    "artist": "Example Artist",
+    "uploadDate": "2024-09-22",
+    "albumCover": "",
+    "lyrics": "This is the first line.\nThis is the second line.\nThis is the third line.\nThis is the fourth line.\nThis is the fifth line.\nThis is the sixth line.\nThis is the seventh line.\nThis is the eighth line.\nThis is the ninth line.\nThis is the tenth line.\nThis is the eleventh line.\nThis is the twelfth line.\nThis is the thirteenth line.\nThis is the fourteenth line.\nThis is the fifteenth line.\nThis is the sixteenth line.\nThis is the seventeenth line.\nThis is the eighteenth line.",
+    "translations": [
+      {
+        "language": "Spanish",
+        "lyrics": "Esta es la primera línea.\nEsta es la segunda línea.\nEsta es la tercera línea.\nEsta es la cuarta línea.\nEsta es la quinta línea.\nEsta es la sexta línea.\nEsta es la séptima línea.\nEsta es la octava línea.\nEsta es la novena línea.\nEsta es la décima línea.\nEsta es la undécima línea.\nEsta es la duodécima línea.\nEsta es la decimotercera línea.\nEsta es la decimocuarta línea.\nEsta es la decimoquinta línea.\nEsta es la decimosexta línea.\nEsta es la decimoséptima línea.\nEsta es la decimoctava línea."
+      },
+      {
+        "language": "French",
+        "lyrics": "Ceci est la première ligne.\nCeci est la deuxième ligne.\nCeci est la troisième ligne.\nCeci est la quatrième ligne.\nCeci est la cinquième ligne.\nCeci est la sixième ligne.\nCeci est la septième ligne.\nCeci est la huitième ligne.\nCeci est la neuvième ligne.\nCeci est la dixième ligne.\nCeci est la onzième ligne.\nCeci est la douzième ligne.\nCeci est la treizième ligne.\nCeci est la quatorzième ligne.\nCeci est la quinzième ligne.\nCeci est la seizième ligne.\nCeci est la dix-septième ligne.\nCeci est la dix-huitième ligne."
+      },
+      {
+        "language": "German",
+        "lyrics": "Dies ist die erste Zeile.\nDies ist die zweite Zeile.\nDies ist die dritte Zeile.\nDies ist die vierte Zeile.\nDies ist die fünfte Zeile.\nDies ist die sechste Zeile.\nDies ist die siebte Zeile.\nDies ist die achte Zeile.\nDies ist die neunte Zeile.\nDies ist die zehnte Zeile.\nDies ist die elfte Zeile.\nDies ist die zwölfte Zeile.\nDies ist die dreizehnte Zeile.\nDies ist die vierzehnte Zeile.\nDies ist die fünfzehnte Zeile.\nDies ist die sechzehnte Zeile.\nDies ist die siebzehnte Zeile.\nDies ist die achtzehnte Zeile."
+      }
+    ]
+  }
+  
