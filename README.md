@@ -16,18 +16,20 @@ This project is a web application that allows users to view song lyrics and thei
 - **Hover Effects**: In side by side mode, hovering over a line highlights the corresponding lines of lyrics and translations.
 
 ## Project Structure
-. ├── server/ # Node.js server files 
-│ ├── server.js # Main server script 
-│ ├── songs/ # Folder containing song data (JSON format) 
-├── public/ # Publicly accessible files (HTML, CSS, JS) 
-│ ├── index.html # Home page 
-│ ├── lyrics.html # Lyrics display page 
-│ ├── style.css # CSS styles 
-│ ├── script.js # Main JavaScript functionality 
-│ ├── images/ # Folder for album images and default image 
-└── songs/ # JSON data containing lyrics and translations 
-└── README.md # This file
+```php
+.
+├── server/                  # Node.js server files
+│   ├── server.js            # Main server script
+├── songs/                   # Folder containing song data (JSON format)
+├── public/                  # Publicly accessible files (HTML, CSS, JS)
+│   ├── index.html           # Home page
+│   ├── lyrics.html          # Lyrics display page
+│   ├── style.css            # CSS styles
+│   ├── script.js            # Main JavaScript functionality
+│   ├── images/              # Folder for album images and default image
+└── README.md                # This file
 
+```
 ## Getting Started
 
 ### Prerequisites
