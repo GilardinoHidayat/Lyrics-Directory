@@ -26,7 +26,8 @@ This project is a web application that allows users to view song lyrics and thei
 │   ├── lyrics.html          # Lyrics display page
 │   ├── style.css            # CSS styles
 │   ├── script.js            # Main JavaScript functionality
-│   ├── images/              # Folder for album images and default image
+│   ├── uploads/             # Folder for album images and default image
+└── LICENSE                  # MIT License file
 └── README.md                # This file
 
 ```
