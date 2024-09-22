@@ -22,11 +22,11 @@ This project is a web application that allows users to view song lyrics and thei
 │   ├── server.js            # Main server script
 ├── songs/                   # Folder containing song data (JSON format)
 ├── public/                  # Publicly accessible files (HTML, CSS, JS)
+│   ├── uploads/             # Folder for album images and default image
 │   ├── index.html           # Home page
 │   ├── lyrics.html          # Lyrics display page
 │   ├── style.css            # CSS styles
 │   ├── script.js            # Main JavaScript functionality
-│   ├── uploads/             # Folder for album images and default image
 ├── LICENSE                  # MIT License file
 └── README.md                # This file
 
