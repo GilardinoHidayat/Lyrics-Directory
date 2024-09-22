@@ -119,4 +119,5 @@ Each song is stored as a JSON file in the `songs/` directory. Below is the struc
 - Song JSON API (/songs/song-title.json): Retrieves the JSON data for a specific song.
 - 
 ## Additional Features
-Fallback Album Cover: If no album cover is provided for a song, a default cover image is displayed.
+- Fallback Album Cover: If no album cover is provided for a song, a default cover image is displayed.
+- Dynamic Searching: Search for songs by artist name.
