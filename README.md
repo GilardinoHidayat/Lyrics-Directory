@@ -16,8 +16,20 @@ This project is a web application that allows users to view song lyrics and thei
 - **Hover Effects**: In side by side mode, hovering over a line highlights the corresponding lines of lyrics and translations.
 
 ## Project Structure
+```php
+.
+├── server/                  # Node.js server files
+│   ├── server.js            # Main server script
+├── songs/                   # Folder containing song data (JSON format)
+├── public/                  # Publicly accessible files (HTML, CSS, JS)
+│   ├── index.html           # Home page
+│   ├── lyrics.html          # Lyrics display page
+│   ├── style.css            # CSS styles
+│   ├── script.js            # Main JavaScript functionality
+│   ├── images/              # Folder for album images and default image
+└── README.md                # This file
 
-
+```
 ## Getting Started
 
 ### Prerequisites
@@ -32,8 +44,8 @@ To run this project locally, you'll need to have:
 1. **Clone the repository**:
 
     ```bash
-    git clone https://github.com/your-username/lyrics-display-app.git
-    cd lyrics-display-app
+    git clone https://github.com/GilardinoHidayat/Lyrics-Directory.git
+    cd Lyrics-Directory
     ```
 
 2. **Install dependencies**:
@@ -105,6 +117,10 @@ Each song is stored as a JSON file in the `songs/` directory. Below is the struc
 - Create Page (/create.html): Form to add new songs.
 - Lyrics Page (/lyrics.html?title=song-title): Displays the lyrics of the selected song.
 - Song JSON API (/songs/song-title.json): Retrieves the JSON data for a specific song.
-- 
+  
 ## Additional Features
-Fallback Album Cover: If no album cover is provided for a song, a default cover image is displayed.
+- Fallback Album Cover: If no album cover is provided for a song, a default cover image is displayed.
+- Dynamic Searching: Search for songs by artist name.
+
+## License
+This project is open-source and available under the MIT License.
