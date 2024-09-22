@@ -44,8 +44,8 @@ To run this project locally, you'll need to have:
 1. **Clone the repository**:
 
     ```bash
-    git clone https://github.com/your-username/lyrics-display-app.git
-    cd lyrics-display-app
+    git clone https://github.com/GilardinoHidayat/Lyrics-Directory.git
+    cd Lyrics-Directory
     ```
 
 2. **Install dependencies**:
