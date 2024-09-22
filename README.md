@@ -117,7 +117,10 @@ Each song is stored as a JSON file in the `songs/` directory. Below is the struc
 - Create Page (/create.html): Form to add new songs.
 - Lyrics Page (/lyrics.html?title=song-title): Displays the lyrics of the selected song.
 - Song JSON API (/songs/song-title.json): Retrieves the JSON data for a specific song.
-- 
+  
 ## Additional Features
 - Fallback Album Cover: If no album cover is provided for a song, a default cover image is displayed.
 - Dynamic Searching: Search for songs by artist name.
+
+## License
+This project is open-source and available under the MIT License.
