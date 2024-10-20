@@ -25,9 +25,14 @@
         <label for="albumCover">Album Cover:</label>
         <input type="file" id="albumCover" name="albumCover" accept="image/*"><br><br>
 
+        <label for="soundcloudUrl">SoundCloud Embed URL:</label>
+        <input type="text" id="soundcloudUrl" name="soundcloudUrl" placeholder="Enter Embed Url"><br><br>
+
+        <label for="soundcloudUrl">Youtube URL:</label>
+        <input type="text" id="youtubeUrl" name="youtubeUrl" placeholder="Enter watch Url"><br><br>
+
         <div id="translations">
             <h3>Translations (Optional)</h3>
-            <!-- Area dinamis untuk input terjemahan -->
         </div>
         <button type="button" id="add-translation">Add Translation</button><br><br>
 
@@ -36,25 +41,21 @@
 
     <script>
         document.getElementById('add-translation').addEventListener('click', function() {
-            // Buat elemen untuk grup terjemahan
             const translationDiv = document.createElement('div');
             translationDiv.className = 'translation-group';
 
-            // Input untuk nama bahasa
             const langInput = document.createElement('input');
             langInput.type = 'text';
             langInput.name = 'translation-language';
             langInput.placeholder = 'Language Name';
             langInput.required = true;
 
-            // Textarea untuk lirik terjemahan
             const lyricsTextarea = document.createElement('textarea');
             lyricsTextarea.name = 'translation-lyrics';
             lyricsTextarea.placeholder = 'Translated Lyrics';
             lyricsTextarea.rows = 3;
             lyricsTextarea.required = true;
 
-            // Tombol untuk menghapus grup terjemahan
             const removeButton = document.createElement('button');
             removeButton.type = 'button';
             removeButton.textContent = 'Remove';
@@ -62,7 +63,6 @@
                 translationDiv.remove();
             });
 
-            // Tambahkan elemen ke dalam div terjemahan
             translationDiv.appendChild(langInput);
             translationDiv.appendChild(lyricsTextarea);
             translationDiv.appendChild(removeButton);
@@ -70,44 +70,43 @@
             document.getElementById('translations').appendChild(translationDiv);
         });
 
-        document.getElementById('song-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+            document.getElementById('song-form').addEventListener('submit', function(event) {
+                event.preventDefault();
 
-            const formData = new FormData(this);
-            const translations = [];
+                const formData = new FormData(this);
+                const translations = [];
 
-            // Ambil semua grup terjemahan
-            const translationGroups = document.querySelectorAll('.translation-group');
-            translationGroups.forEach(group => {
-                const lang = group.querySelector('input[name="translation-language"]').value;
-                const translatedLyrics = group.querySelector('textarea[name="translation-lyrics"]').value;
+                const translationGroups = document.querySelectorAll('.translation-group');
+                translationGroups.forEach(group => {
+                    const lang = group.querySelector('input[name="translation-language"]').value;
+                    const translatedLyrics = group.querySelector('textarea[name="translation-lyrics"]').value;
 
-                translations.push({
-                    language: lang,
-                    lyrics: translatedLyrics
+                    translations.push({
+                        language: lang,
+                        lyrics: translatedLyrics
+                    });
+                });
+
+                formData.append('translations', JSON.stringify(translations));
+
+                fetch('/save-song', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Song saved successfully!');
+                        const songTitle = document.getElementById('title').value;
+                        window.location.href = `lyrics.html?title=${encodeURIComponent(songTitle)}`;
+                    } else {
+                        alert('Error saving song.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error saving song:', error);
                 });
             });
-
-            // Tambahkan terjemahan ke formData
-            formData.append('translations', JSON.stringify(translations));
-
-            fetch('/save-song', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Song saved successfully!');
-                    window.location.reload(); // Reload halaman setelah penyimpanan
-                } else {
-                    alert('Error saving song.');
-                }
-            })
-            .catch(error => {
-                console.error('Error saving song:', error);
-            });
-        });
     </script>
 </body>
 </html>

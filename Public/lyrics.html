@@ -1,169 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="page" content="home">
     <title>Lyrics</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-
-        .controls {
-            position: flex;
-            top: 20px;
-            left: 20px;
-        }
-
-        .toggle-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .toggle-button:hover {
-            background-color: #0056b3;
-        }
-
-        .panel {
-            max-width: 1000px;
-            margin: 100px auto 0;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .lyrics-box {
-            padding: 5px;
-            margin: 0 5px;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-
-        .side-by-side {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .side-by-side div {
-            display: flex;
-        }
-
-        .side-by-side div:hover {
-        background-color: #f0f0f0; /* Warna background saat hover */
-        }
-
-        .line-container {
-            margin-bottom: 3px; /* Jarak antar kalimat */
-        }
-
-        .side-by-side .lyrics-box {
-            flex: 1;
-            white-space: pre-wrap;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .translation-line {
-            font-style: italic;
-            color: grey;
-        }
-
-        .original-line {
-            font-weight: bold;
-        }
-
-        .translation-toggle {
-            display: inline-block;
-            margin: 10px 0;
-        }
-
-        .single-lyrics {
-            width: 100%;
-            text-align: center; /* Default alignment */
-        }
-
-        .side-lyrics {
-            display: none;
-        }
-
-        .side-lyrics.active {
-            display: block;
-        }
-
-        .header-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding-bottom: 10px;
-        }
-
-        /* Mengatur gambar */
-        .header-cover {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        /* Mengatur teks di samping gambar */
-        .header-text {
-            display: flex;
-            flex-direction: column; /* Mengatur teks secara vertikal */
-        }
-
-        .header-text h1, 
-        .header-text h2, 
-        .header-text p {
-            margin: 0; /* Menghilangkan margin default untuk penataan yang lebih baik */
-        }
-
-        .background-cover-wrapper {
-        position: absolute; /* Mengatur posisi gambar agar bisa discroll */
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden; /* Menghilangkan overflow dari gambar */
-        z-index: -1; /* Di belakang konten */
-    }
-
-    /* Background image styling */
-    .background-cover {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: blur(10px);
-    }
-
-    /* Edge fade border effect */
-    .background-cover-wrapper::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0) 75%, rgba(255, 255, 255, 0.9) 100%);
-        z-index: 1;
-        pointer-events: none;
-    }
-    </style>
+    <link id="favicon" rel="icon" href="favicon1.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="background-cover-wrapper">
-        <img id="background-cover" src="" alt="Background Cover" class="background-cover">
-    </div>
+        <img id="background-cover" src="" alt="Background Cover" class="background-cover"></div>
     <div class="panel">
         <div class="header-container">
             <img id="album-cover" src="" alt="Album Cover" style="width: 200px; height: 200px; object-fit: cover;" class="header-cover">
@@ -173,18 +22,13 @@
                 <p id="song-upload-date"></p>
             </div>
         </div>
-        
-
         <div class="controls">
             <button id="single-text-button" class="toggle-button">Single Text</button>
             <button id="side-by-side-button" class="toggle-button">Side by Side</button>
             <select id="text-alignment-dropdown" class="toggle-button">
-                <option value="center">Align Center</option>
-                <option value="left">Align Left</option>
-            </select>
-    
-            <!-- Dropdown for text alignment -->
-            
+			<option value="center">Align Center</option>
+			<option value="left">Align Left</option>
+		</select>
         </div>
         <div id="side-by-side-options">
             <div class="translation-toggle">
@@ -192,143 +36,176 @@
                 <div id="translation-options"></div>
             </div>
         </div>
-
         <div id="lyrics-panel" class="single-lyrics"></div>
         <div id="translations-panel" class="side-by-side hidden"></div>
     </div>
-
+    <div id="youtube-widget-container">
+        <iframe width="1000px" height="562.5px"
+            src="https://www.youtube.com/embed/GU340WktQ1A">
+        </iframe>
+    </div>
+    <div id="soundcloud-widget-container">
+        <button id="toggle-sticky" class="toggle-sticky">Disable</button>
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="">
+	</iframe>
+    </div>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const title = urlParams.get('title');
         const fileName = title.toLowerCase().replace(/\s+/g, '-') + '.json';
-
+        const soundcloudPlayer = document.getElementById('soundcloud-player');
+        const soundcloudWidgetContainer = document.getElementById('soundcloud-widget-container');
+        const youtubeWidgetContainer = document.getElementById('youtube-widget-container');
         let songData = null;
         let activeTranslations = [];
         let isSingleText = true;
         let showOriginalLyrics = true;
         let translationVisibility = {};
-
         fetch(`../songs/${fileName}`)
             .then(response => response.json())
             .then(song => {
                 songData = song;
+                document.title = `${song.title} - ${song.artist}`;
                 document.getElementById('song-title').textContent = song.title;
-                document.getElementById('song-artist').textContent = `Artist: ${song.artist}`;
+                document.getElementById('song-artist').textContent = `${song.artist}`;
                 document.getElementById('song-upload-date').textContent = `Upload Date: ${song.uploadDate}`;
-
-                const albumCover = song.albumCover ? `/uploads/${song.albumCover}` : '/uploads/default.jpg';
+                const albumCover = song.albumCover ? `/uploads/${song.albumCover}` : '/uploads/default';
+                document.getElementById('favicon').href = albumCover;
                 document.getElementById('album-cover').src = albumCover;
-                document.getElementById('background-cover').src = albumCover;   
-                
+                document.getElementById('background-cover').src = albumCover;
                 displaySingleText();
                 setupTranslationOptions();
+                const soundcloudUrl = song.soundcloudUrl;
+                if (soundcloudUrl) {
+                    const embedUrl = soundcloudUrl;
+                    soundcloudWidgetContainer.querySelector('iframe').src = `${embedUrl}`;
+                    soundcloudWidgetContainer.style.display = 'block';
+                } else {
+                    soundcloudWidgetContainer.style.display = 'none';
+                }
+                const youtubeUrl = song.youtubeUrl;
+                if (youtubeUrl) {
+                    const embedYoutubeUrl = youtubeUrl.replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/');
+                    youtubeWidgetContainer.querySelector('iframe').src = embedYoutubeUrl;
+                } else {
+                    youtubeWidgetContainer.style.display = 'none';
+                }
             })
             .catch(error => {
                 document.getElementById('song-title').textContent = 'Song not found';
                 console.error('Error loading song lyrics:', error);
+                soundcloudWidgetContainer.style.display = 'none';
             });
 
-        function displaySingleText() {
-            const lyricsPanel = document.getElementById('lyrics-panel');
-            const translationsPanel = document.getElementById('translations-panel');
-            const alignPanel = document.getElementById('text-alignment-dropdown');
-            lyricsPanel.innerHTML = '';
-            translationsPanel.innerHTML = '';
-            translationsPanel.classList.add('hidden');
-            alignPanel.classList.remove('hidden');
+            function displaySingleText() {
+    const lyricsPanel = document.getElementById('lyrics-panel');
+    const translationsPanel = document.getElementById('translations-panel');
+    const alignPanel = document.getElementById('text-alignment-dropdown');
 
-            lyricsPanel.classList.remove('hidden');
-            lyricsPanel.classList.add('single-lyrics');
+    lyricsPanel.innerHTML = '';
+    translationsPanel.innerHTML = '';
 
-            const lyricsLines = songData.lyrics.split('\n');
-            lyricsLines.forEach((line, index) => {
-                const lineContainer = document.createElement('div');
-                lineContainer.classList.add('line-container');
+    translationsPanel.classList.add('hidden');
+    alignPanel.classList.remove('hidden');
+    lyricsPanel.classList.remove('hidden');
+    lyricsPanel.classList.add('single-lyrics');
 
-                if (showOriginalLyrics) {
-                    const originalLineDiv = document.createElement('div');
-                    originalLineDiv.textContent = line;
-                    originalLineDiv.classList.add('original-line');
-                    lineContainer.appendChild(originalLineDiv);
-                }
+    const lyricsLines = songData.lyrics.split('\n');
 
-                if (songData.translations && activeTranslations.length > 0) {
-                    activeTranslations.forEach(translationIndex => {
-                        const translation = songData.translations[translationIndex];
-                        const translationLines = translation.lyrics.split('\n');
-                        if (translationLines[index]) {
-                            const translationDiv = document.createElement('div');
-                            translationDiv.textContent = translationLines[index];
-                            translationDiv.classList.add('translation-line');
+    lyricsLines.forEach((line, index) => {
+        const lineContainer = document.createElement('div');
+        lineContainer.classList.add('line-container');
 
-                            if (!showOriginalLyrics && activeTranslations[0] === translationIndex) {
-                                translationDiv.classList.add('original-line');
-                                translationDiv.classList.remove('translation-line');
-                            }
-                            
-                            if (!translationVisibility[translationIndex]) {
-                                translationDiv.classList.add('hidden');
-                            }
-                            lineContainer.appendChild(translationDiv);
+        if (line.trim() === '') {
+            const emptyDiv = document.createElement('div');
+            emptyDiv.textContent = '\u00A0';
+            lineContainer.appendChild(emptyDiv);
+        } else {
+            if (showOriginalLyrics) {
+                const originalLineDiv = document.createElement('div');
+                originalLineDiv.textContent = line;
+                originalLineDiv.classList.add('original-line');
+                lineContainer.appendChild(originalLineDiv);
+            }
+
+            if (songData.translations && activeTranslations.length > 0) {
+                activeTranslations.forEach(translationIndex => {
+                    const translation = songData.translations[translationIndex];
+                    const translationLines = translation.lyrics.split('\n');
+
+                    if (translationLines[index]) {
+                        const translationDiv = document.createElement('div');
+                        translationDiv.textContent = translationLines[index];
+                        translationDiv.classList.add('translation-line');
+
+                        if (!showOriginalLyrics && activeTranslations[0] === translationIndex) {
+                            translationDiv.classList.add('original-line');
+                            translationDiv.classList.remove('translation-line');
                         }
-                    });
-                }
 
-                lyricsPanel.appendChild(lineContainer);
-            });
-        }
+                        if (!translationVisibility[translationIndex]) {
+                            translationDiv.classList.add('hidden');
+                        }
 
-        function displaySideBySide() {
-            const lyricsPanel = document.getElementById('lyrics-panel');
-            const translationsPanel = document.getElementById('translations-panel');
-            const alignPanel = document.getElementById('text-alignment-dropdown');
-            lyricsPanel.innerHTML = '';
-            translationsPanel.innerHTML = '';
-            translationsPanel.classList.remove('hidden');
-
-            alignPanel.classList.add('hidden');
-            lyricsPanel.classList.add('hidden');
-            translationsPanel.classList.remove('hidden');
-
-            const lyricsLines = songData.lyrics.split('\n');
-
-            lyricsLines.forEach((line, index) => {
-                if (line.trim()) {
-                    const containerDiv = document.createElement('div');
-
-                    if (showOriginalLyrics) {
-                        const originalDiv = document.createElement('div');
-                        originalDiv.classList.add('lyrics-box');
-                        originalDiv.textContent = line;
-                        containerDiv.appendChild(originalDiv);
+                        lineContainer.appendChild(translationDiv);
                     }
-
-                    songData.translations.forEach((translation, transIndex) => {
-                        if (activeTranslations.includes(transIndex)) {
-                            const translationDiv = document.createElement('div');
-                            translationDiv.classList.add('lyrics-box');
-                            const translationLines = translation.lyrics.split('\n');
-                            if (translationLines[index]) {
-                                translationDiv.textContent = translationLines[index];
-                            } else {
-                                translationDiv.textContent = '';
-                            }
-                            if (!translationVisibility[transIndex]) translationDiv.classList.add('hidden');
-                            containerDiv.appendChild(translationDiv);
-                        }
-                    });
-
-                    translationsPanel.appendChild(containerDiv);
-                }
-            });
-
-            adjustSideBySideLayout();
+                });
+            }
         }
+        lyricsPanel.appendChild(lineContainer);
+    });
+}
+
+
+function displaySideBySide() {
+    const lyricsPanel = document.getElementById('lyrics-panel');
+    const translationsPanel = document.getElementById('translations-panel');
+    const alignPanel = document.getElementById('text-alignment-dropdown');
+    lyricsPanel.innerHTML = '';
+    translationsPanel.innerHTML = '';
+    translationsPanel.classList.remove('hidden');
+    alignPanel.classList.add('hidden');
+    lyricsPanel.classList.add('hidden');
+    translationsPanel.classList.remove('hidden');
+    const lyricsLines = songData.lyrics.split('\n');
+    
+    lyricsLines.forEach((line, index) => {
+        const containerDiv = document.createElement('div');
+        
+        if (showOriginalLyrics) {
+            const originalDiv = document.createElement('div');
+            originalDiv.classList.add('lyrics-box');
+            originalDiv.textContent = line.trim() ? line : '\u00A0'; 
+            containerDiv.appendChild(originalDiv);
+        }
+
+        songData.translations.forEach((translation, transIndex) => {
+            if (activeTranslations.includes(transIndex)) {
+                const translationDiv = document.createElement('div');
+                translationDiv.classList.add('lyrics-box');
+                const translationLines = translation.lyrics.split('\n');
+                
+                if (translationLines[index]) {
+                    translationDiv.textContent = translationLines[index].trim() ? translationLines[index] : '\u00A0';
+                } else {
+                    translationDiv.textContent = '\u00A0';
+                }
+
+                if (!translationVisibility[transIndex]) translationDiv.classList.add('hidden');
+                containerDiv.appendChild(translationDiv);
+            }
+        });
+
+        translationsPanel.appendChild(containerDiv);
+    });
+    
+    adjustSideBySideLayout();
+}
+
 
         function adjustSideBySideLayout() {
             const translationBoxes = document.querySelectorAll('#translations-panel .lyrics-box');
             const columnCount = translationBoxes.length;
-
             translationBoxes.forEach(box => {
                 box.classList.remove('two-lyrics', 'three-lyrics');
                 if (columnCount === 1) {
@@ -344,7 +221,6 @@
         function setupTranslationOptions() {
             const translationOptionsDiv = document.getElementById('translation-options');
             translationOptionsDiv.innerHTML = '';
-
             songData.translations.forEach((translation, index) => {
                 const translationOptionDiv = document.createElement('div');
                 const checkbox = document.createElement('input');
@@ -356,7 +232,6 @@
                 const label = document.createElement('label');
                 label.textContent = translation.language;
                 label.setAttribute('for', `translation-toggle-${index}`);
-
                 translationOptionDiv.appendChild(checkbox);
                 translationOptionDiv.appendChild(label);
                 translationOptionsDiv.appendChild(translationOptionDiv);
@@ -370,14 +245,12 @@
             } else {
                 activeTranslations = activeTranslations.filter(i => i !== index);
             }
-
             if (isSingleText) {
                 displaySingleText();
             } else {
                 displaySideBySide();
             }
         }
-
         document.getElementById('show-original').addEventListener('change', (e) => {
             showOriginalLyrics = e.target.checked;
             if (isSingleText) {
@@ -386,26 +259,42 @@
                 displaySideBySide();
             }
         });
-
         document.getElementById('single-text-button').addEventListener('click', () => {
             isSingleText = true;
             document.getElementById('lyrics-panel').classList.remove('hidden');
             document.getElementById('translations-panel').classList.add('hidden');
             displaySingleText();
         });
-
         document.getElementById('side-by-side-button').addEventListener('click', () => {
             isSingleText = false;
             document.getElementById('lyrics-panel').classList.add('hidden');
             document.getElementById('translations-panel').classList.remove('hidden');
             displaySideBySide();
         });
-
-        // Dropdown for text alignment in single text mode
         document.getElementById('text-alignment-dropdown').addEventListener('change', (e) => {
             const alignment = e.target.value;
             document.querySelector('.single-lyrics').style.textAlign = alignment;
         });
+        const widgetContainer = document.getElementById('soundcloud-widget-container');
+        const toggleButton = document.getElementById('toggle-sticky');
+        let isSticky = true;
+        toggleButton.addEventListener('click', () => {
+            if (isSticky) {
+                widgetContainer.style.position = 'relative';
+                toggleButton.textContent = 'Enable floating';
+            } else {
+                widgetContainer.style.position = 'sticky';
+                widgetContainer.style.bottom = '0';
+                toggleButton.textContent = 'Disable';
+            }
+            isSticky = !isSticky;
+        });
+        
     </script>
+    <div class="endPoint"></div>
 </body>
+<footer>
+    <p>Copyright &copy; 2024 Gilardino Hidayat</p>
+    <a href="index.html">Home</a>
+</footer>
 </html>

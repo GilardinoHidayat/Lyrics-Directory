@@ -3,27 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="page" content="home">
     <title>Song List</title>
-    <style>
-        .song-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .song-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            margin-right: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Song List</h1>
-    
     <form id="search-form">
-        <label for="search-artist">Search by Artist:</label>
-        <input type="text" id="search-artist" name="search-artist">
+        <label for="search-type">Search by:</label>
+        <select id="search-type">
+            <option value="artist">Artist</option>
+            <option value="title">Title</option>
+        </select>
+        
+        <input type="text" id="search-input" name="search-input" placeholder="Enter artist or title">
         <button type="submit">Search</button>
     </form>
 
@@ -31,47 +24,47 @@
 
     <script>
         const searchForm = document.getElementById('search-form');
-        const searchInput = document.getElementById('search-artist');
+        const searchInput = document.getElementById('search-input');
+        const searchType = document.getElementById('search-type');
         const songList = document.getElementById('song-list');
 
         searchForm.addEventListener('submit', function(event) {
             event.preventDefault();
-            const artist = searchInput.value.trim().toLowerCase();
-            loadSongs(artist);
+            const query = searchInput.value.trim().toLowerCase();
+            const type = searchType.value;
+            loadSongs(query, type);
         });
 
-        function loadSongs(artist = '') {
+        function loadSongs(query = '', type = 'artist') {
             fetch('/songs')
                 .then(response => response.json())
                 .then(files => {
-                    songList.innerHTML = ''; // Clear current list
+                    songList.innerHTML = '';
                     files.forEach(file => {
                         fetch(`/songs/${file}`)
                             .then(response => response.json())
                             .then(song => {
-                                if (artist === '' || song.artist.toLowerCase().includes(artist)) {
+                                const searchField = type === 'artist' ? song.artist : song.title;
+                                if (query === '' || searchField.toLowerCase().includes(query)) {
                                     const songTitle = song.title.replace(/\s+/g, '-').toLowerCase();
                                     const li = document.createElement('li');
                                     li.className = 'song-item';
 
-                                    // Cek apakah album cover ada, jika tidak gunakan default
                                     const img = document.createElement('img');
-                                    const albumCover = song.albumCover ? `/uploads/${song.albumCover}` : '/uploads/default.jpg';
+                                    const albumCover = song.albumCover ? `/uploads/${song.albumCover}` : '/uploads/default';
 
-                                    // Tes apakah file gambar ada
                                     fetch(albumCover).then(response => {
                                         if (response.ok) {
                                             img.src = albumCover;
                                         } else {
-                                            img.src = '/uploads/default.jpg'; // Jika tidak ada, pakai default
+                                            img.src = '/uploads/default';
                                         }
                                         img.alt = `${song.title} album cover`;
                                     });
 
-                                    // Tambahkan link ke lirik lagu
                                     const link = document.createElement('a');
                                     link.href = `lyrics.html?title=${songTitle}`;
-                                    link.textContent = `${song.title} by ${song.artist}`;
+                                    link.textContent = `${song.title} - ${song.artist}`;
 
                                     li.appendChild(img);
                                     li.appendChild(link);
@@ -83,8 +76,6 @@
                 })
                 .catch(error => console.error('Error loading song list:', error));
         }
-
-        // Load all songs initially
         loadSongs();
     </script>
 </body>
