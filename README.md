@@ -1,6 +1,7 @@
 # Lyrics Display Web Application
 
 This project is a web application that allows users to view song lyrics and their translations. The application has two main pages: a home page where users can select a song, and a lyrics page that displays the selected song's lyrics along with any available translations.
+Here to see a public only website preview [Preview Page (without node.js)](https://lyricsdirectory.netlify.app/)
 
 ## Features
 
@@ -125,3 +126,12 @@ Each song is stored as a JSON file in the `songs/` directory. Below is the struc
 
 ## License
 This project is open-source and available under the MIT License.
+
+## Disclaimer
+Please note that this website is only intended for displaying song lyrics and related metadata (such as title, artist, release date, etc.). The project does not provide any service for storing or processing sensitive information.
+
+- **Do not enter personal or sensitive data when** using the song creation feature or when submitting lyrics. All data submitted and processed in JSON format is accessible to the public, and the security of the data entered into JSON cannot be guaranteed.
+- The JSON format used to store song and lyric data is strictly for the purpose of displaying content on the website and is not protected by encryption or other security mechanisms.
+
+This website does not store or handle user data outside the context of displaying lyrics and is not responsible for any consequences resulting from the input of inappropriate data.
+Please use this website responsibly and only for its intended purpose: publishing song lyrics.
