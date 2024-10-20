@@ -1,112 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="page" content="create" />
     <title>Create Song</title>
     <style>
-        .translation-group {
-            margin-bottom: 15px;
-        }
+      .translation-group {
+        margin-bottom: 15px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Create a New Song</h1>
     <form id="song-form" enctype="multipart/form-data">
-        <label for="title">Song Title:</label>
-        <input type="text" id="title" name="title" required><br><br>
+      <label for="title">Song Title:</label>
+      <input type="text" id="title" name="title" required /><br /><br />
 
-        <label for="artist">Artist Name:</label>
-        <input type="text" id="artist" name="artist" required><br><br>
+      <label for="artist">Artist Name:</label>
+      <input type="text" id="artist" name="artist" required /><br /><br />
 
-        <label for="lyrics">Lyrics:</label>
-        <textarea id="lyrics" name="lyrics" rows="5" required></textarea><br><br>
+      <label for="lyrics">Lyrics:</label>
+      <textarea id="lyrics" name="lyrics" rows="5" required></textarea
+      ><br /><br />
 
-        <label for="albumCover">Album Cover:</label>
-        <input type="file" id="albumCover" name="albumCover" accept="image/*"><br><br>
+      <label for="albumCover">Album Cover:</label>
+      <input
+        type="file"
+        id="albumCover"
+        name="albumCover"
+        accept="image/*"
+      /><br /><br />
 
-        <label for="soundcloudUrl">SoundCloud Embed URL:</label>
-        <input type="text" id="soundcloudUrl" name="soundcloudUrl" placeholder="Enter Embed Url"><br><br>
+      <label for="soundcloudUrl">SoundCloud Embed URL:</label>
+      <input
+        type="text"
+        id="soundcloudUrl"
+        name="soundcloudUrl"
+        placeholder="Enter Embed Url"
+      /><br /><br />
 
-        <label for="soundcloudUrl">Youtube URL:</label>
-        <input type="text" id="youtubeUrl" name="youtubeUrl" placeholder="Enter watch Url"><br><br>
+      <label for="soundcloudUrl">Youtube URL:</label>
+      <input
+        type="text"
+        id="youtubeUrl"
+        name="youtubeUrl"
+        placeholder="Enter watch Url"
+      /><br /><br />
 
-        <div id="translations">
-            <h3>Translations (Optional)</h3>
-        </div>
-        <button type="button" id="add-translation">Add Translation</button><br><br>
+      <div id="translations">
+        <h3>Translations (Optional)</h3>
+      </div>
+      <button type="button" id="add-translation">Add Translation</button
+      ><br /><br />
 
-        <button type="submit">Save Song</button>
+      <button type="submit">Save Song</button>
     </form>
-
-    <script>
-        document.getElementById('add-translation').addEventListener('click', function() {
-            const translationDiv = document.createElement('div');
-            translationDiv.className = 'translation-group';
-
-            const langInput = document.createElement('input');
-            langInput.type = 'text';
-            langInput.name = 'translation-language';
-            langInput.placeholder = 'Language Name';
-            langInput.required = true;
-
-            const lyricsTextarea = document.createElement('textarea');
-            lyricsTextarea.name = 'translation-lyrics';
-            lyricsTextarea.placeholder = 'Translated Lyrics';
-            lyricsTextarea.rows = 3;
-            lyricsTextarea.required = true;
-
-            const removeButton = document.createElement('button');
-            removeButton.type = 'button';
-            removeButton.textContent = 'Remove';
-            removeButton.addEventListener('click', function() {
-                translationDiv.remove();
-            });
-
-            translationDiv.appendChild(langInput);
-            translationDiv.appendChild(lyricsTextarea);
-            translationDiv.appendChild(removeButton);
-
-            document.getElementById('translations').appendChild(translationDiv);
-        });
-
-            document.getElementById('song-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-
-                const formData = new FormData(this);
-                const translations = [];
-
-                const translationGroups = document.querySelectorAll('.translation-group');
-                translationGroups.forEach(group => {
-                    const lang = group.querySelector('input[name="translation-language"]').value;
-                    const translatedLyrics = group.querySelector('textarea[name="translation-lyrics"]').value;
-
-                    translations.push({
-                        language: lang,
-                        lyrics: translatedLyrics
-                    });
-                });
-
-                formData.append('translations', JSON.stringify(translations));
-
-                fetch('/save-song', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Song saved successfully!');
-                        const songTitle = document.getElementById('title').value;
-                        window.location.href = `lyrics.html?title=${encodeURIComponent(songTitle)}`;
-                    } else {
-                        alert('Error saving song.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error saving song:', error);
-                });
-            });
-    </script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
